@@ -1,0 +1,103 @@
+#containerMenu {
+    background-image: url('fundo.png');
+    background-size: cover;
+    background-position: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-direction: column;
+
+    padding-right: 40px;
+}
+
+.menu {
+    display: block;
+}
+
+.text {
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    color: white;
+    text-align: right;
+}
+
+#tituloPrincipal {
+    font-size: 70px;
+    max-width: 500px;
+}
+
+#start {
+    margin-top: 20px;
+    margin-right: 100px;
+    height: 100px;
+    width: 200px;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-size: 30px;
+    color: white;
+    background-color: black;
+    outline: solid 2px white;
+    transition: color 0.5s ease;
+}
+
+#start:hover {
+    color: red;
+}
+
+#cenario_1 {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+}
+
+.dialogo {
+    padding: 20px 140px 20px 20px;
+    display: flex;
+    outline: solid 2px white;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 200px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+}
+
+.botaoSkipar {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    height: 50px;
+    width: 100px;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    font-size: 10px;
+    color: white;
+    background-color: black;
+    outline: solid 2px white;
+}
+
+#cenario_2 {
+
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: black;
+}
