@@ -4,6 +4,7 @@ const menu = document.getElementById('containerMenu');
 
 const cenario1 = document.getElementById('cenario_1');
 const cenario2 = document.getElementById('cenario_2');
+const cenario3 = document.getElementById('cenario_3');
 const portaLeft = document.getElementById('portaLEFT')
 const portaRight = document.getElementById('portaRIGHT')
 const portasAbertas = document.getElementById('portasABERTAS')
@@ -84,14 +85,20 @@ botoes[1].addEventListener('click', function () {
         dialogosCena2[indiceCena2].style.display = 'block';
 
     } else {
+         // TERMINOU A CENA 1
+         cenario2.style.display = 'none';
 
+         // COMEÇA CENA 2
+         cenario3.style.display = 'block';
+ 
+         dialogosCena3[0].style.display = 'block';
 
     }
 });
 
 botoes[2].addEventListener('click', function () {
 
-    dialogosCena2[indiceCena3].style.display = 'none';
+    dialogosCena3[indiceCena3].style.display = 'none';
 
     indiceCena3++;
 

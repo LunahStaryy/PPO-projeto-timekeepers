@@ -50,6 +50,7 @@
 }
 
 #cenario_1 {
+    background-image: url('celular.png');
     display: none;
     position: fixed;
     top: 0;
@@ -89,7 +90,9 @@
 }
 
 #cenario_2 {
-
+    background-image: url('banco.png');
+    background-size: cover;
+    background-position: center;
     display: none;
 
     position: fixed;
@@ -99,7 +102,22 @@
     width: 100vw;
     height: 100vh;
 
-    background-color: black;
+}
+
+#cenario_3 {
+  /*  background-image: url('anuncio.png');
+  */
+    background-size: cover;
+    background-position: center;
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
 }
 
 
