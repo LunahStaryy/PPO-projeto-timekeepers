@@ -4,15 +4,20 @@ const menu = document.getElementById('containerMenu');
 
 const cenario1 = document.getElementById('cenario_1');
 const cenario2 = document.getElementById('cenario_2');
+const portaLeft = document.getElementById('portaLEFT')
+const portaRight = document.getElementById('portaRIGHT')
+const portasAbertas = document.getElementById('portasABERTAS')
+const portasFechadas = document.getElementById('portasFECHADAS')
 
 const dialogosCena1 = document.querySelectorAll('.cena1.text');
 const dialogosCena2 = document.querySelectorAll('.cena2.text');
+const dialogosCena3 = document.querySelectorAll('.cena3.text');
 
 const botoes = document.querySelectorAll('.botaoSkipar');
 
 let indiceCena1 = 0;
 let indiceCena2 = 0;
-
+let indiceCena3 = 0;
 
 
 // ESCONDE TODOS OS TEXTOS
@@ -80,6 +85,22 @@ botoes[1].addEventListener('click', function () {
 
     } else {
 
-        alert('Fim da cena 2!');
+
+    }
+});
+
+botoes[2].addEventListener('click', function () {
+
+    dialogosCena2[indiceCena3].style.display = 'none';
+
+    indiceCena3++;
+
+    if (indiceCena3 < dialogosCena3.length) {
+
+        dialogosCena3[indiceCena3].style.display = 'block';
+
+    } else {
+
+
     }
 });
