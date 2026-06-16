@@ -74,6 +74,7 @@
     align-items: center;
     justify-content: center;
     background-color: black;
+    opacity: 0.5;
 }
 
 .botaoSkipar {
@@ -105,8 +106,8 @@
 }
 
 #cenario_3 {
-  /*  background-image: url('anuncio.png');
-  */
+   background-image: url('anuncio.png');
+  
     background-size: cover;
     background-position: center;
     display: none;

@@ -30,6 +30,9 @@ dialogosCena2.forEach(p => {
     p.style.display = 'none';
 });
 
+dialogosCena3.forEach(p => {
+    p.style.display = 'none';
+});
 
 
 // MOSTRA O PRIMEIRO TEXTO DA CENA 1
@@ -107,7 +110,7 @@ botoes[2].addEventListener('click', function () {
         dialogosCena3[indiceCena3].style.display = 'block';
 
     } else {
-
+        cenario3.style.display = 'none';
 
     }
 });
