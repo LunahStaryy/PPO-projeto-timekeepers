@@ -2,18 +2,15 @@
     background-image: url('fundo.png');
     background-size: cover;
     background-position: center;
-
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: flex-end;
     flex-direction: column;
-
     padding-right: 40px;
 }
 
@@ -95,34 +92,74 @@
     background-size: cover;
     background-position: center;
     display: none;
-
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100vw;
     height: 100vh;
 
 }
 
 #cenario_3 {
-   background-image: url('anuncio.png');
-  
+    background-image: url('anuncio.png');
     background-size: cover;
     background-position: center;
     display: none;
-
     position: fixed;
     top: 0;
     left: 0;
-
     width: 100vw;
     height: 100vh;
 
+}
+
+#cenario_4 {
+    background-image: url('restaurant.png');
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-size: cover;
+    background-position: center;
+    display: none;
+}
+
+#cenario_5 {
+    background-image: url('restaurant.png');
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-size: cover;
+    background-position: center;
+    display: none;
+}
+
+
+#ContainerJogo {
+    background-image: url('portasABERTAS.png');
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-size: cover;
+    background-position: center;
+    display: none;
 }
 
 
 
 .jogo {
     display: none;
+}
+
+
+.escondido {
+    display: none;
+}
+
+.foto {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-size: cover;
+    background-position: center;
+
 }
