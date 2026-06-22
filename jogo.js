@@ -22,6 +22,8 @@ const portaRight = document.getElementById('portaRIGHT');
 const portasAbertas = document.getElementById('portasABERTAS');
 const portasFechadas = document.getElementById('portasFECHADAS');
 
+const batEsquerda = document.getElementById('bateriaEsquerda');
+const batDireita = document.getElementById('bateriaDireita');
 
 const nenhumSaiu = document.getElementById("threeOfThem")
 const furiaSaiu = document.getElementById("furiaMissing")
@@ -47,6 +49,7 @@ const haishaAudio = document.getElementById('haishaAudio')
 console.log(furiaAudio, gierAudio, haishaAudio);
 
 
+
 const dialogosCena1 = document.querySelectorAll('.cena1.text');
 const dialogosCena2 = document.querySelectorAll('.cena2.text');
 const dialogosCena3 = document.querySelectorAll('.cena3.text');
@@ -54,7 +57,13 @@ const dialogosCena4 = document.querySelectorAll('.cena4.text');
 const dialogosCena5 = document.querySelectorAll('.cena5.text');
 const botoes = document.querySelectorAll('.botaoSkipar');
 
+let portaDireitaTempoFechada = 0;
+let portaEsquerdaTempoFechada = 0;
 
+let cooldownDireita = 0;
+let cooldownEsquerda = 0;
+let bateriaEsquerda = 100;
+let bateriaDireita = 100;
 
 
 let indiceCena1 = 0;
@@ -379,21 +388,113 @@ function IniciarJogo() {
     animatronics.haisha.lado = resultado[1];
 
     loopJogo = setInterval(atualizarAnimatronics, 1000);
-
+    setInterval(atualizarPortasCooldown, 1000);
     atualizarPortas();
     atualizarCamera();
 }
 
+
+function atualizarPortasCooldown() {
+
+    atualizarBateria();
+    atualizarHUDBateria();
+
+    if (portaDireitaFechada) portaDireitaTempoFechada++;
+    else portaDireitaTempoFechada = 0;
+
+    if (portaDireitaTempoFechada >= 15) {
+        cooldownDireita = 10;
+        portaDireitaFechada = false;
+        portaDireitaTempoFechada = 0;
+        atualizarPortas();
+    }
+
+    if (cooldownDireita > 0) cooldownDireita--;
+
+    if (portaEsquerdaFechada) portaEsquerdaTempoFechada++;
+    else portaEsquerdaTempoFechada = 0;
+
+    if (portaEsquerdaTempoFechada >= 15) {
+        cooldownEsquerda = 10;
+        portaEsquerdaFechada = false;
+        portaEsquerdaTempoFechada = 0;
+        atualizarPortas();
+    }
+
+    if (cooldownEsquerda > 0) cooldownEsquerda--;
+}
+
+function atualizarBateria() {
+
+    // ESQUERDA
+    if (portaEsquerdaFechada) {
+        bateriaEsquerda -= 0.8;
+    } else if (cooldownEsquerda === 0) {
+        bateriaEsquerda += 0.4;
+    }
+
+    if (bateriaEsquerda <= 0) {
+        bateriaEsquerda = 0;
+        cooldownEsquerda = 10;
+        portaEsquerdaFechada = false;
+    }
+
+    if (bateriaEsquerda > 100) bateriaEsquerda = 100;
+
+
+    // DIREITA
+    if (portaDireitaFechada) {
+        bateriaDireita -= 0.8;
+    } else if (cooldownDireita === 0) {
+        bateriaDireita += 0.4;
+    }
+
+    if (bateriaDireita <= 0) {
+        bateriaDireita = 0;
+        cooldownDireita = 10;
+        portaDireitaFechada = false;
+    }
+
+    if (bateriaDireita > 100) bateriaDireita = 100;
+}
+
+function atualizarHUDBateria() {
+
+    batEsquerda.style.width = bateriaEsquerda + "%";
+
+    if (cooldownEsquerda > 0) {
+        batEsquerda.style.background = "red";
+    } else if (bateriaEsquerda < 30) {
+        batEsquerda.style.background = "orange";
+    } else {
+        batEsquerda.style.background = "lime";
+    }
+
+    batDireita.style.width = bateriaDireita + "%";
+
+    if (cooldownDireita > 0) {
+        batDireita.style.background = "red";
+    } else if (bateriaDireita < 30) {
+        batDireita.style.background = "orange";
+    } else {
+        batDireita.style.background = "lime";
+    }
+}
+
+
 botaoDireito.addEventListener('click', () => {
 
     portaDireitaFechada = !portaDireitaFechada;
+    if (cooldownDireita > 0) return;
     atualizarPortas();
+
     console.log("Porta direita:", portaDireitaFechada);
 });
 
 botaoEsquerdo.addEventListener('click', () => {
 
     portaEsquerdaFechada = !portaEsquerdaFechada;
+    if (cooldownEsquerda > 0) return;
     atualizarPortas();
     console.log("Porta esquerda:", portaEsquerdaFechada);
 });

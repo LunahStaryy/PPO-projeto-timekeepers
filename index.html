@@ -89,14 +89,29 @@
 
 
     <div id="ContainerJogo" class="jogo">
-        <button id="fecharDireita" class="jogo">FecharDireita</button>
+
+
+        <div class="portaContainer esquerda">
+            <button id="fecharEsquerda">Esquerda</button>
+            <div class="bateriaFrame">
+                <div id="bateriaEsquerda" class="bateria"></div>
+            </div>
+        </div>
         <button id="cameraAbrir" class="jogo">Abrir Camera</button>
-        <button id="fecharEsquerda" class="jogo">fecharEsquerda</button>
+        <div class="portaContainer direita">
+            <div class="bateriaFrame">
+                <div id="bateriaDireita" class="bateria"></div>
+            </div>
+            <button id="fecharDireita">Direita</button>
+        </div>
+
 
         <img id="portaLEFT" src="portaLEFT.png" class="escondido foto">
         <img id="portaRIGHT" src="portaRIGHT.png" class="escondido foto">
         <img id="portasABERTAS" src="portasABERTAS.png" class="escondido foto">
         <img id="portasFECHADAS" src="portasFECHADAS.png" class="escondido foto">
+
+
 
         <div class="camera" id="camera">
             <img id="threeOfThem" src="threeOfThem.png" class="escondido foto">
