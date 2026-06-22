@@ -47,13 +47,16 @@ const furiaAudio = document.getElementById('furiaAudio')
 const gierAudio = document.getElementById('gierAudio')
 const haishaAudio = document.getElementById('haishaAudio')
 
+const backgroundMusic = document.getElementById('backgroundMusic');
+backgroundMusic.loop = true;
+backgroundMusic.volume = 0.3; // opcional (deixa mais suave)
+
 const dialogosCena1 = document.querySelectorAll('.cena1.text');
 const dialogosCena2 = document.querySelectorAll('.cena2.text');
 const dialogosCena3 = document.querySelectorAll('.cena3.text');
 const dialogosCena4 = document.querySelectorAll('.cena4.text');
 const dialogosCena5 = document.querySelectorAll('.cena5.text');
 const botoes = document.querySelectorAll('.botaoSkipar');
-
 
 //criacao de variaveis para o codigo
 let portaDireitaTempoFechada = 0;
@@ -232,6 +235,10 @@ botaoStart.addEventListener('click', function () {
     gierAudio.play().then(() => gierAudio.pause());
     haishaAudio.play().then(() => haishaAudio.pause());
 
+    backgroundMusic.currentTime = 0;
+    backgroundMusic.play().catch(() => { });
+
+
 });
 
 //botoes de passar dialogo
@@ -347,6 +354,10 @@ botoes[4].addEventListener('click', () => {
             elemento.style.display = 'block';
 
         });
+
+        backgroundMusic.pause();
+        backgroundMusic.currentTime = 0;
+
 
         IniciarJogo();
     }
