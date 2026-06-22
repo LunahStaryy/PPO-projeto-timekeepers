@@ -23,14 +23,14 @@ const portasAbertas = document.getElementById('portasABERTAS');
 const portasFechadas = document.getElementById('portasFECHADAS');
 
 
-const nenhumSaiu = document.getElementById("threeOfThem.png")
-const furiaSaiu = document.getElementById("furiaMissing.png")
-const gierSaiu = document.getElementById("gierMissing.png")
-const haishaSaiu = document.getElementById("haishaMissing.png")
-const apenasFuria = document.getElementById("onlyFuria.png")
-const apenasGier = document.getElementById("onlyGier.png")
-const apenasHaisha = document.getElementById("onlyHaisha.png")
-const nenhumFicou = document.getElementById("noneOfThem.png")
+const nenhumSaiu = document.getElementById("threeOfThem")
+const furiaSaiu = document.getElementById("furiaMissing")
+const gierSaiu = document.getElementById("gierMissing")
+const haishaSaiu = document.getElementById("haishaMissing")
+const apenasFuria = document.getElementById("onlyFuria")
+const apenasGier = document.getElementById("onlyGier")
+const apenasHaisha = document.getElementById("onlyHaisha")
+const nenhumFicou = document.getElementById("noneOfThem")
 
 const gameoverHaisha = document.getElementById('gameoverHaisha');
 const gameoverFuria = document.getElementById('gameoverFuria');
@@ -542,25 +542,4 @@ function atualizarPortas() {
     }
 }
 
-
-
-botaoDireito.addEventListener('click', () => {
-
-    portaDireitaFechada = !portaDireitaFechada;
-
-    atualizarPortas();
-
-    console.log("Porta direita:", portaDireitaFechada);
-});
-
-
-
-botaoEsquerdo.addEventListener('click', () => {
-
-    portaEsquerdaFechada = !portaEsquerdaFechada;
-
-    atualizarPortas();
-
-    console.log("Porta esquerda:", portaEsquerdaFechada);
-});
 
