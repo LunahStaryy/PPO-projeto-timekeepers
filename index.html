@@ -7,7 +7,7 @@
     <title>JogoVeryScary >:3</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    <script type='module' src='jogo.js'></script>
+
 </head>
 
 
@@ -79,7 +79,8 @@
 
         <div id="caixa_dialogo5" class="cena5 dialogo">
             <p class="cena5 text">Ah, deve ser esse.</p>
-            <p class="cena5 text">Que e</p>
+            <p class="cena5 text">Mais que lugarzinho isolado também.</p>
+            <p class="cena5 text">...Pera, algum daqueles animatronics se mexeram?</p>
             <button class="cena5 botaoSkipar">Próximo</button>
         </div>
 
@@ -89,27 +90,48 @@
 
     <div id="ContainerJogo" class="jogo">
         <button id="fecharDireita" class="jogo">FecharDireita</button>
-        <button id="cameraAbrir">Abrir Camera</button>
+        <button id="cameraAbrir" class="jogo">Abrir Camera</button>
         <button id="fecharEsquerda" class="jogo">fecharEsquerda</button>
 
-        <div class="camera">
-            <img src="threeOfThem.png" class="foto">
-            <img src="furiaMissing.png" class="escondido foto">
-            <img src="gierMissing.png" class="escondido foto">
-            <img src="haishaMissing.mp4" class="escondido foto">
-            <img src="onlyFuria.png" class="escondido foto">
-            <img src="onlyGier.png" class="escondido foto">
-            <img src="onlyHaisha.png" class="escondido foto">
-            <img src="noneOfThem.png" class="escondido foto">
+        <img id="portaLEFT.png" src="portaLEFT.png" class="escondido foto">
+        <img id="portaRIGHT.png" src="portaRIGHT.png" class="escondido foto">
+        <img id="portasABERTAS.png" src="portasABERTAS.png" class="escondido foto">
+        <img id="portasFECHADAS.png" src="portasFECHADAS.png" class="escondido foto">
 
-
-            <button class="camera" id="cameraFechar">cameraFechar</button>
+        <div class="camera" id="camera">
+            <img id="threeOfThem.png" src="threeOfThem.png" class="escondido foto">
+            <img id="furiaMissing.png" src="furiaMissing.png" class="escondido foto">
+            <img id="gierMissing.png" src="gierMissing.png" class="escondido foto">
+            <img id="haishaMissing.png" src="haishaMissing.png" class="escondido foto">
+            <img id="onlyFuria.png" src="onlyFuria.png" class="escondido foto">
+            <img id="onlyGier.png" src="onlyGier.png" class="escondido foto">
+            <img id="onlyHaisha.png" src="onlyHaisha.png" class="escondido foto">
+            <img id="noneOfThem.png" src="noneOfThem.png" class="escondido foto">
+            <img id="cameraImagem" src="threeOfThem.png" class="foto">
+            <button id="cameraFechar">Fechar</button>
         </div>
-
 
     </div>
 
+    <div id="gameoverHaisha" style="display:none;">
+        <video id="haishaJumpscare" width="100%" height="100%" autoplay>
+            <source src="haishaKill.mp4" type="video/mp4">
+        </video>
+    </div>
 
+    <div id="gameoverFuria" style="display:none;">
+        <video id="furiaJumpscare" width="100%" height="100%" autoplay>
+            <source src="furiaKill.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="gameoverGier" style="display:none;">
+        <video id="gierJumpscare" width="100%" height="100%" autoplay>
+            <source src="gierKill.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <script src="jogo.js"></script>
 </body>
 
 </html>
