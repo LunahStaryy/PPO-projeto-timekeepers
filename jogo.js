@@ -40,6 +40,13 @@ const haishaJumpscare = document.getElementById('haishaJumpscare');
 const furiaJumpscare = document.getElementById('furiaJumpscare');
 const gierJumpscare = document.getElementById('gierJumpscare');
 
+const furiaAudio = document.getElementById('furiaAudio')
+const gierAudio = document.getElementById('gierAudio')
+const haishaAudio = document.getElementById('haishaAudio')
+
+console.log(furiaAudio, gierAudio, haishaAudio);
+
+
 const dialogosCena1 = document.querySelectorAll('.cena1.text');
 const dialogosCena2 = document.querySelectorAll('.cena2.text');
 const dialogosCena3 = document.querySelectorAll('.cena3.text');
@@ -67,6 +74,59 @@ let ladoFuria;
 
 let portaDireitaFechada = false;
 let portaEsquerdaFechada = false;
+
+let audioQueue = [];
+let audioEmExecucao = false;
+
+function enfileirarAudio(nome, animatronic) {
+    audioQueue.push({ nome, animatronic });
+    tocarProximoAudio();
+}
+
+function pegarAudio(nome) {
+
+    switch (nome) {
+
+        case 'furia':
+            return furiaAudio;
+
+        case 'gier':
+            return gierAudio;
+
+        case 'haisha':
+            return haishaAudio;
+    }
+}
+
+
+function tocarProximoAudio() {
+
+    if (audioEmExecucao) return;
+    if (audioQueue.length === 0) return;
+
+    audioEmExecucao = true;
+
+    const item = audioQueue.shift();
+
+    tocarAudioAnimatronic(item.animatronic, item.nome);
+}
+
+
+function tocarAudioAnimatronic(animatronic, nome) {
+
+    const audio = pegarAudio(nome);
+
+    audio.currentTime = 0;
+
+    iniciarTremor(animatronic.lado);
+
+    audio.play();
+
+    audio.onended = () => {
+        audioEmExecucao = false;
+        tocarProximoAudio();
+    };
+}
 
 
 function inicializarAnimatronic() {
@@ -142,6 +202,12 @@ botaoStart.addEventListener('click', function () {
     menu.style.display = 'none';
 
     cenario1.style.display = 'block';
+
+    // desbloqueia áudio no navegador
+    furiaAudio.play().then(() => furiaAudio.pause());
+    gierAudio.play().then(() => gierAudio.pause());
+    haishaAudio.play().then(() => haishaAudio.pause());
+
 
 });
 
@@ -380,21 +446,13 @@ function verificarAnimatronic(nome, animatronic) {
 
     animatronic.countdown--;
 
-    if (
-        animatronic.countdown <= 30 &&
-        !animatronic.saiuDaCamera
-    ) {
-
+    if (animatronic.countdown <= 30 && !animatronic.saiuDaCamera) {
         animatronic.saiuDaCamera = true;
+        enfileirarAudio(nome, animatronic);
+        iniciarTremor(animatronic.lado);
 
         atualizarCamera();
     }
-
-    console.log(
-        nome,
-        animatronic.countdown,
-        animatronic.lado
-    );
 
     if (animatronic.countdown <= 0) {
 
@@ -423,8 +481,7 @@ function verificarAnimatronic(nome, animatronic) {
 
             atualizarCamera();
 
-
-            console.log(nome + ' foi bloqueado');
+            pararTremor(animatronic.lado);
 
         }
         else {
@@ -438,7 +495,15 @@ function verificarAnimatronic(nome, animatronic) {
 function gameOver(animatronic) {
 
     clearInterval(loopJogo);
+    audioQueue = [];
+    audioEmExecucao = false;
 
+    furiaAudio.pause();
+    gierAudio.pause();
+    haishaAudio.pause();
+
+    pararTremor('esquerda');
+    pararTremor('direita');
     document.getElementById('ContainerJogo').style.display = 'none';
 
     switch (animatronic) {
@@ -492,6 +557,37 @@ function gameOver(animatronic) {
             break;
     }
 }
+
+
+let tremores = {
+    esquerda: false,
+    direita: false
+};
+
+function iniciarTremor(lado) {
+
+    if (tremores[lado]) return; // evita duplicar
+
+    tremores[lado] = true;
+
+    const botao = lado === 'esquerda'
+        ? botaoEsquerdo
+        : botaoDireito;
+
+    botao.classList.add('tremendo');
+}
+
+function pararTremor(lado) {
+
+    tremores[lado] = false;
+
+    const botao = lado === 'esquerda'
+        ? botaoEsquerdo
+        : botaoDireito;
+
+    botao.classList.remove('tremendo');
+}
+
 
 
 
