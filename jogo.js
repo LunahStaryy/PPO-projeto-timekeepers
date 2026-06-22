@@ -76,7 +76,6 @@ let portaDireitaFechada = false;
 let portaEsquerdaFechada = false;
 
 let audioQueue = [];
-let audioEmExecucao = false;
 
 function enfileirarAudio(nome, animatronic) {
     audioQueue.push({ nome, animatronic });
@@ -100,33 +99,50 @@ function pegarAudio(nome) {
 
 
 function tocarProximoAudio() {
-
-    if (audioEmExecucao) return;
     if (audioQueue.length === 0) return;
 
-    audioEmExecucao = true;
-
     const item = audioQueue.shift();
+    if (!item) return;
 
     tocarAudioAnimatronic(item.animatronic, item.nome);
 }
 
+let audioAtual = null;
 
 function tocarAudioAnimatronic(animatronic, nome) {
-
     const audio = pegarAudio(nome);
 
+    pararAudioAtual(); // sempre interrompe o anterior
+
+    audioAtual = audio;
+
+    audio.pause();
     audio.currentTime = 0;
 
     iniciarTremor(animatronic.lado);
 
-    audio.play();
-
     audio.onended = () => {
-        audioEmExecucao = false;
-        tocarProximoAudio();
+        audioAtual = null;
+        tocarProximoAudio(); // continua fila normalmente
     };
+
+    audio.play().catch(() => {
+        audioAtual = null;
+        tocarProximoAudio();
+    });
 }
+
+
+function pararAudioAtual() {
+    if (audioAtual) {
+        audioAtual.pause();
+        audioAtual.currentTime = 0;
+        audioAtual.onended = null;
+        audioAtual = null;
+    }
+
+}
+
 
 
 function inicializarAnimatronic() {
@@ -496,11 +512,12 @@ function gameOver(animatronic) {
 
     clearInterval(loopJogo);
     audioQueue = [];
-    audioEmExecucao = false;
 
-    furiaAudio.pause();
-    gierAudio.pause();
-    haishaAudio.pause();
+    if (audioAtual) {
+        audioAtual.pause();
+        audioAtual.currentTime = 0;
+        audioAtual = null;
+    }
 
     pararTremor('esquerda');
     pararTremor('direita');
