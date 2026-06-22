@@ -1,5 +1,5 @@
+//pegas de ids para o codigo
 const botaoStart = document.getElementById('start');
-
 const menu = document.getElementById('containerMenu');
 
 const cenario1 = document.getElementById('cenario_1');
@@ -42,13 +42,10 @@ const haishaJumpscare = document.getElementById('haishaJumpscare');
 const furiaJumpscare = document.getElementById('furiaJumpscare');
 const gierJumpscare = document.getElementById('gierJumpscare');
 
+//pega de audio
 const furiaAudio = document.getElementById('furiaAudio')
 const gierAudio = document.getElementById('gierAudio')
 const haishaAudio = document.getElementById('haishaAudio')
-
-console.log(furiaAudio, gierAudio, haishaAudio);
-
-
 
 const dialogosCena1 = document.querySelectorAll('.cena1.text');
 const dialogosCena2 = document.querySelectorAll('.cena2.text');
@@ -57,6 +54,8 @@ const dialogosCena4 = document.querySelectorAll('.cena4.text');
 const dialogosCena5 = document.querySelectorAll('.cena5.text');
 const botoes = document.querySelectorAll('.botaoSkipar');
 
+
+//criacao de variaveis para o codigo
 let portaDireitaTempoFechada = 0;
 let portaEsquerdaTempoFechada = 0;
 
@@ -64,7 +63,6 @@ let cooldownDireita = 0;
 let cooldownEsquerda = 0;
 let bateriaEsquerda = 100;
 let bateriaDireita = 100;
-
 
 let indiceCena1 = 0;
 let indiceCena2 = 0;
@@ -84,7 +82,35 @@ let ladoFuria;
 let portaDireitaFechada = false;
 let portaEsquerdaFechada = false;
 
+//fila do audio
 let audioQueue = [];
+
+/* vao ser os dados basicos para o funcionamento de cada animatronic
+o countdown, que vai ser a variavel para o tempo ate atacar o segurança
+o lado, que é qual lado ira atacar
+e se saiu da camera
+*/
+let animatronics = {
+
+    furia: {
+        countdown: 0,
+        lado: '',
+        saiuDaCamera: false
+    },
+
+    gier: {
+        countdown: 0,
+        lado: '',
+        saiuDaCamera: false
+    },
+
+    haisha: {
+        countdown: 0,
+        lado: '',
+        saiuDaCamera: false
+    }
+};
+
 
 function enfileirarAudio(nome, animatronic) {
     audioQueue.push({ nome, animatronic });
@@ -105,7 +131,6 @@ function pegarAudio(nome) {
             return haishaAudio;
     }
 }
-
 
 function tocarProximoAudio() {
     if (audioQueue.length === 0) return;
@@ -141,7 +166,6 @@ function tocarAudioAnimatronic(animatronic, nome) {
     });
 }
 
-
 function pararAudioAtual() {
     if (audioAtual) {
         audioAtual.pause();
@@ -151,8 +175,6 @@ function pararAudioAtual() {
     }
 
 }
-
-
 
 function inicializarAnimatronic() {
 
@@ -166,27 +188,7 @@ function inicializarAnimatronic() {
     return [countdown, lado];
 }
 
-let animatronics = {
-
-    furia: {
-        countdown: 0,
-        lado: '',
-        saiuDaCamera: false
-    },
-
-    gier: {
-        countdown: 0,
-        lado: '',
-        saiuDaCamera: false
-    },
-
-    haisha: {
-        countdown: 0,
-        lado: '',
-        saiuDaCamera: false
-    }
-};
-
+// esconde os cenarios e a camera
 cenario1.style.display = 'none';
 cenario2.style.display = 'none';
 cenario3.style.display = 'none';
@@ -194,7 +196,7 @@ cenario4.style.display = 'none';
 cenario5.style.display = 'none';
 camera.style.display = 'none';
 
-// ESCONDE TODOS OS TEXTOS
+//esconde os textos
 dialogosCena1.forEach(p => {
     p.style.display = 'none';
 });
@@ -215,13 +217,10 @@ dialogosCena5.forEach(p => {
     p.style.display = 'none';
 });
 
-
-// MOSTRA O PRIMEIRO TEXTO DA CENA 1
+//comeca mostrando o da primeira cena
 dialogosCena1[0].style.display = 'block';
 
-
-
-// BOTAO START
+//ao clicar no botao start, esconde o menu e inicializa o cenario 1, mas tambem os audios dos animatronics
 botaoStart.addEventListener('click', function () {
 
     menu.style.display = 'none';
@@ -233,12 +232,15 @@ botaoStart.addEventListener('click', function () {
     gierAudio.play().then(() => gierAudio.pause());
     haishaAudio.play().then(() => haishaAudio.pause());
 
-
 });
 
-
-
-// BOTAO DA CENA 1
+//botoes de passar dialogo
+/* como funciona:
+no botao de proximo da primeira cena, ao clicar, ele vai esconder o primeiro elemento do dialogo,
+que esta organizado como um array, assim escondendo o texto
+vai aumentar um indice da cena. se esse indice for menor que a quantidade de textos, ele mostra o proximo texto
+se nao, ele esconde a cena 1, comeca a cena 2, e seus dialogos
+*/
 botoes[0].addEventListener('click', function () {
 
     dialogosCena1[indiceCena1].style.display = 'none';
@@ -250,20 +252,14 @@ botoes[0].addEventListener('click', function () {
         dialogosCena1[indiceCena1].style.display = 'block';
 
     } else {
-
-        // TERMINOU A CENA 1
         cenario1.style.display = 'none';
 
-        // COMEÇA CENA 2
         cenario2.style.display = 'block';
 
         dialogosCena2[0].style.display = 'block';
     }
 });
 
-
-
-// BOTAO DA CENA 2
 botoes[1].addEventListener('click', function () {
 
     dialogosCena2[indiceCena2].style.display = 'none';
@@ -305,8 +301,6 @@ botoes[2].addEventListener('click', function () {
     }
 });
 
-
-
 botoes[3].addEventListener('click', function () {
 
     dialogosCena4[indiceCena4].style.display = 'none';
@@ -327,7 +321,10 @@ botoes[3].addEventListener('click', function () {
     }
 });
 
-
+/* mesma coisa com os outros botoes, mas nesse quando ele acaba comeca o jogo,
+entao ele esconde o cenario anterior, torna visivel o container do jogo e seus elementos,
+e por fim inicia a funcao de jogo
+*/
 botoes[4].addEventListener('click', () => {
 
     dialogosCena5[indiceCena5].style.display = 'none';
@@ -338,7 +335,6 @@ botoes[4].addEventListener('click', () => {
         dialogosCena5[indiceCena5].style.display = 'block';
 
     } else {
-
 
         cenario5.style.display = 'none';
 
@@ -360,9 +356,6 @@ botoes[4].addEventListener('click', () => {
 });
 
 
-
-// jogo
-
 function IniciarJogo() {
 
     portaDireitaFechada = false;
@@ -371,7 +364,6 @@ function IniciarJogo() {
     animatronics.furia.saiuDaCamera = false;
     animatronics.gier.saiuDaCamera = false;
     animatronics.haisha.saiuDaCamera = false;
-
 
     let resultado;
 
@@ -392,7 +384,6 @@ function IniciarJogo() {
     atualizarPortas();
     atualizarCamera();
 }
-
 
 function atualizarPortasCooldown() {
 
@@ -426,7 +417,7 @@ function atualizarPortasCooldown() {
 
 function atualizarBateria() {
 
-    // ESQUERDA
+    // Esquerda
     if (portaEsquerdaFechada) {
         bateriaEsquerda -= 0.8;
     } else if (cooldownEsquerda === 0) {
@@ -441,8 +432,7 @@ function atualizarBateria() {
 
     if (bateriaEsquerda > 100) bateriaEsquerda = 100;
 
-
-    // DIREITA
+    // Direita
     if (portaDireitaFechada) {
         bateriaDireita -= 0.8;
     } else if (cooldownDireita === 0) {
@@ -481,7 +471,6 @@ function atualizarHUDBateria() {
     }
 }
 
-
 botaoDireito.addEventListener('click', () => {
 
     portaDireitaFechada = !portaDireitaFechada;
@@ -498,7 +487,6 @@ botaoEsquerdo.addEventListener('click', () => {
     atualizarPortas();
     console.log("Porta esquerda:", portaEsquerdaFechada);
 });
-
 
 function atualizarCamera() {
 
@@ -546,8 +534,6 @@ function atualizarCamera() {
         imagemCamera.src = "noneOfThem.png";
     }
 }
-
-
 
 function atualizarAnimatronics() {
 
@@ -676,7 +662,6 @@ function gameOver(animatronic) {
     }
 }
 
-
 let tremores = {
     esquerda: false,
     direita: false
@@ -706,9 +691,6 @@ function pararTremor(lado) {
     botao.classList.remove('tremendo');
 }
 
-
-
-
 botaoAbrirCamera.addEventListener('click', () => {
 
     camera.style.display = 'block';
@@ -717,15 +699,11 @@ botaoAbrirCamera.addEventListener('click', () => {
 
 });
 
-
-
 botaoFecharCamera.addEventListener('click', () => {
 
     camera.style.display = 'none';
 
 });
-
-
 
 function atualizarPortas() {
 
