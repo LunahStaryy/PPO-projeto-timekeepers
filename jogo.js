@@ -10,14 +10,12 @@ const cenario5 = document.getElementById('cenario_5');
 const cenario6 = document.getElementById('cenario_6');
 const cenario7 = document.getElementById('cenario_7');
 
-
 const botaoDireito = document.getElementById('fecharDireita');
 const botaoEsquerdo = document.getElementById('fecharEsquerda');
 const botaoAbrirCamera = document.getElementById('cameraAbrir');
 const botaoFecharCamera = document.getElementById('cameraFechar');
 const camera = document.getElementById('camera');
 const imagemCamera = document.getElementById('cameraImagem');
-
 
 const portaLeft = document.getElementById('portaLEFT');
 const portaRight = document.getElementById('portaRIGHT');
