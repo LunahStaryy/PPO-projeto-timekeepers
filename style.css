@@ -24,6 +24,24 @@
     text-align: right;
 }
 
+.furiaText {
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    color: rgb(97, 97, 97);
+    text-align: right;
+}
+
+.haishaText {
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    color: rgb(255, 0, 221);
+    text-align: right;
+}
+
+.gierText {
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+    color: rgb(255, 72, 0);
+    text-align: right;
+}
+
 #tituloPrincipal {
     font-size: 70px;
     max-width: 500px;
@@ -138,6 +156,39 @@
     display: none;
 
 }
+
+#cenario_6 {
+
+    background-image: url('portasFECHADAS.png');
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-size: cover;
+    background-position: center;
+    display: none;
+
+}
+
+#cenario_7 {
+
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-size: cover;
+    background-position: center;
+    display: none;
+
+}
+
 
 #ContainerJogo {
     background-image: url('portasABERTAS.png');

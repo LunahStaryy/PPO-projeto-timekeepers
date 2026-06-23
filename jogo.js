@@ -74,6 +74,7 @@ let indiceCena4 = 0;
 let indiceCena5 = 0;
 
 let loopJogo;
+let loopPortas;
 let countdownHaisha;
 let countdownGier;
 let countdownFuria;
@@ -155,8 +156,6 @@ function tocarAudioAnimatronic(animatronic, nome) {
 
     audio.pause();
     audio.currentTime = 0;
-
-    iniciarTremor(animatronic.lado);
 
     audio.onended = () => {
         audioAtual = null;
@@ -366,7 +365,6 @@ botoes[4].addEventListener('click', () => {
 
 });
 
-
 function IniciarJogo() {
 
     portaDireitaFechada = false;
@@ -391,7 +389,7 @@ function IniciarJogo() {
     animatronics.haisha.lado = resultado[1];
 
     loopJogo = setInterval(atualizarAnimatronics, 1000);
-    setInterval(atualizarPortasCooldown, 1000);
+    loopPortas = setInterval(atualizarPortasCooldown, 1000);
     atualizarPortas();
     atualizarCamera();
 }
@@ -585,18 +583,17 @@ function verificarAnimatronic(nome, animatronic) {
 
         if (portaFechada) {
 
+            const ladoAntigo = animatronic.lado;
+
+            pararTremor(ladoAntigo);
+
             const novo = inicializarAnimatronic();
 
             animatronic.countdown = novo[0];
-
             animatronic.lado = novo[1];
-
             animatronic.saiuDaCamera = false;
 
             atualizarCamera();
-
-            pararTremor(animatronic.lado);
-
         }
         else {
 
@@ -609,6 +606,7 @@ function verificarAnimatronic(nome, animatronic) {
 function gameOver(animatronic) {
 
     clearInterval(loopJogo);
+    clearInterval(loopPortas);
     audioQueue = [];
 
     if (audioAtual) {
@@ -674,32 +672,34 @@ function gameOver(animatronic) {
 }
 
 let tremores = {
-    esquerda: false,
-    direita: false
+    esquerda: 0,
+    direita: 0
 };
 
 function iniciarTremor(lado) {
 
-    if (tremores[lado]) return; // evita duplicar
+    tremores[lado]++;
 
-    tremores[lado] = true;
-
-    const botao = lado === 'esquerda'
-        ? botaoEsquerdo
-        : botaoDireito;
+    const botao =
+        lado === 'esquerda'
+            ? botaoEsquerdo
+            : botaoDireito;
 
     botao.classList.add('tremendo');
 }
 
 function pararTremor(lado) {
 
-    tremores[lado] = false;
+    if (tremores[lado] > 0)
+        tremores[lado]--;
 
-    const botao = lado === 'esquerda'
-        ? botaoEsquerdo
-        : botaoDireito;
+    const botao =
+        lado === 'esquerda'
+            ? botaoEsquerdo
+            : botaoDireito;
 
-    botao.classList.remove('tremendo');
+    if (tremores[lado] === 0)
+        botao.classList.remove('tremendo');
 }
 
 botaoAbrirCamera.addEventListener('click', () => {
