@@ -7,6 +7,8 @@ const cenario2 = document.getElementById('cenario_2');
 const cenario3 = document.getElementById('cenario_3');
 const cenario4 = document.getElementById('cenario_4');
 const cenario5 = document.getElementById('cenario_5');
+const cenario6 = document.getElementById('cenario_6');
+const cenario7 = document.getElementById('cenario_7');
 
 
 const botaoDireito = document.getElementById('fecharDireita');
@@ -56,7 +58,16 @@ const dialogosCena2 = document.querySelectorAll('.cena2.text');
 const dialogosCena3 = document.querySelectorAll('.cena3.text');
 const dialogosCena4 = document.querySelectorAll('.cena4.text');
 const dialogosCena5 = document.querySelectorAll('.cena5.text');
+const dialogosCena6 = document.querySelectorAll('.cena6.text');
+//usa um diferente porque os personagens tem dialogos diferentes
+const dialogosCena7 = document.querySelectorAll('.cena7 p');
+
 const botoes = document.querySelectorAll('.botaoSkipar');
+
+const botaoFreeplay = document.getElementById('freeplay');
+
+let modoHistoria = true;
+let timerVitoria;
 
 //criacao de variaveis para o codigo
 let portaDireitaTempoFechada = 0;
@@ -72,6 +83,9 @@ let indiceCena2 = 0;
 let indiceCena3 = 0;
 let indiceCena4 = 0;
 let indiceCena5 = 0;
+let indiceCena6 = 0;
+let indiceCena7 = 0;
+
 
 let loopJogo;
 let loopPortas;
@@ -225,6 +239,8 @@ dialogosCena1[0].style.display = 'block';
 //ao clicar no botao start, esconde o menu e inicializa o cenario 1, mas tambem os audios dos animatronics
 botaoStart.addEventListener('click', function () {
 
+    modoHistoria = true;
+
     menu.style.display = 'none';
 
     cenario1.style.display = 'block';
@@ -239,6 +255,16 @@ botaoStart.addEventListener('click', function () {
 
 
 });
+
+botaoFreeplay.addEventListener('click', () => {
+
+    modoHistoria = false;
+
+    menu.style.display = 'none';
+
+    iniciarGameplay();
+});
+
 
 //botoes de passar dialogo
 /* como funciona:
@@ -358,12 +384,53 @@ botoes[4].addEventListener('click', () => {
         backgroundMusic.currentTime = 0;
 
 
-        IniciarJogo();
+        iniciarGameplay();
     }
 
 
 
 });
+
+botoes[5].addEventListener('click', () => {
+
+    dialogosCena6[indiceCena6].style.display = 'none';
+
+    indiceCena6++;
+
+    if (indiceCena6 < dialogosCena6.length) {
+
+        dialogosCena6[indiceCena6].style.display = 'block';
+
+    } else {
+
+        cenario6.style.display = 'none';
+
+        cenario7.style.display = 'block';
+
+        dialogosCena7.forEach(p => {
+            p.style.display = 'none';
+        });
+
+        dialogosCena7[0].style.display = 'block';
+    }
+});
+
+botoes[6].addEventListener('click', () => {
+
+    dialogosCena7[indiceCena7].style.display = 'none';
+
+    indiceCena7++;
+
+    if (indiceCena7 < dialogosCena7.length) {
+
+        dialogosCena7[indiceCena7].style.display = 'block';
+
+    } else {
+
+        location.reload();
+    }
+});
+
 
 function IniciarJogo() {
 
@@ -392,6 +459,32 @@ function IniciarJogo() {
     loopPortas = setInterval(atualizarPortasCooldown, 1000);
     atualizarPortas();
     atualizarCamera();
+}
+
+function iniciarGameplay() {
+
+    const jogo = document.getElementById('ContainerJogo');
+
+    jogo.style.display = 'block';
+
+    document.querySelectorAll('.jogo').forEach(elemento => {
+        elemento.style.display = 'block';
+    });
+
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+
+    IniciarJogo();
+
+    if (modoHistoria) {
+
+        timerVitoria = setTimeout(() => {
+
+            finalVerdadeiro();
+
+        }, 180000); // 180 segundos
+
+    }
 }
 
 function atualizarPortasCooldown() {
@@ -607,6 +700,7 @@ function gameOver(animatronic) {
 
     clearInterval(loopJogo);
     clearInterval(loopPortas);
+    clearTimeout(timerVitoria);
     audioQueue = [];
 
     if (audioAtual) {
@@ -669,6 +763,31 @@ function gameOver(animatronic) {
 
             break;
     }
+}
+
+function finalVerdadeiro() {
+
+    clearInterval(loopJogo);
+    clearInterval(loopPortas);
+
+    clearTimeout(timerVitoria);
+
+    audioQueue = [];
+
+    pararAudioAtual();
+
+    pararTremor('esquerda');
+    pararTremor('direita');
+
+    document.getElementById('ContainerJogo').style.display = 'none';
+
+    cenario6.style.display = 'block';
+
+    dialogosCena6.forEach(p => {
+        p.style.display = 'none';
+    });
+
+    dialogosCena6[0].style.display = 'block';
 }
 
 let tremores = {
