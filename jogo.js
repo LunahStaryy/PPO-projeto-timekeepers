@@ -84,7 +84,6 @@ let indiceCena5 = 0;
 let indiceCena6 = 0;
 let indiceCena7 = 0;
 
-
 let loopJogo;
 let loopPortas;
 let countdownHaisha;
@@ -100,6 +99,26 @@ let portaEsquerdaFechada = false;
 
 //fila do audio
 let audioQueue = [];
+
+let audioAtual = null;
+let animatronicAudioAtual = null;
+
+function pararAudioAnimatronic(nome) {
+
+    if (animatronicAudioAtual === nome && audioAtual) {
+
+        audioAtual.pause();
+        audioAtual.currentTime = 0;
+        audioAtual.onended = null;
+
+        audioAtual = null;
+        animatronicAudioAtual = null;
+
+        tocarProximoAudio();
+    }
+
+    audioQueue = audioQueue.filter(item => item.nome !== nome);
+}
 
 /* vao ser os dados basicos para o funcionamento de cada animatronic
 o countdown, que vai ser a variavel para o tempo ate atacar o segurança
@@ -157,25 +176,26 @@ function tocarProximoAudio() {
     tocarAudioAnimatronic(item.animatronic, item.nome);
 }
 
-let audioAtual = null;
-
 function tocarAudioAnimatronic(animatronic, nome) {
     const audio = pegarAudio(nome);
 
     pararAudioAtual(); // sempre interrompe o anterior
 
     audioAtual = audio;
+    animatronicAudioAtual = nome;
 
     audio.pause();
     audio.currentTime = 0;
 
     audio.onended = () => {
         audioAtual = null;
-        tocarProximoAudio(); // continua fila normalmente
+        animatronicAudioAtual = null;
+        tocarProximoAudio();
     };
 
     audio.play().catch(() => {
         audioAtual = null;
+        animatronicAudioAtual = null;
         tocarProximoAudio();
     });
 }
@@ -186,8 +206,8 @@ function pararAudioAtual() {
         audioAtual.currentTime = 0;
         audioAtual.onended = null;
         audioAtual = null;
+        animatronicAudioAtual = null;
     }
-
 }
 
 function inicializarAnimatronic() {
@@ -262,7 +282,6 @@ botaoFreeplay.addEventListener('click', () => {
 
     iniciarGameplay();
 });
-
 
 //botoes de passar dialogo
 /* como funciona:
@@ -428,7 +447,6 @@ botoes[6].addEventListener('click', () => {
         location.reload();
     }
 });
-
 
 function IniciarJogo() {
 
@@ -677,6 +695,8 @@ function verificarAnimatronic(nome, animatronic) {
             const ladoAntigo = animatronic.lado;
 
             pararTremor(ladoAntigo);
+
+            pararAudioAnimatronic(nome);
 
             const novo = inicializarAnimatronic();
 
