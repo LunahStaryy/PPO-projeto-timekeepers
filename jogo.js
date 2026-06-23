@@ -428,9 +428,9 @@ function atualizarBateria() {
 
     // Esquerda
     if (portaEsquerdaFechada) {
-        bateriaEsquerda -= 0.8;
+        bateriaEsquerda -= 2.8;
     } else if (cooldownEsquerda === 0) {
-        bateriaEsquerda += 0.4;
+        bateriaEsquerda += 0.6;
     }
 
     if (bateriaEsquerda <= 0) {
@@ -443,9 +443,9 @@ function atualizarBateria() {
 
     // Direita
     if (portaDireitaFechada) {
-        bateriaDireita -= 0.8;
+        bateriaDireita -= 2.8;
     } else if (cooldownDireita === 0) {
-        bateriaDireita += 0.4;
+        bateriaDireita += 0.6;
     }
 
     if (bateriaDireita <= 0) {
